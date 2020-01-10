@@ -307,10 +307,22 @@ APP.removeMarker = function(id){
 	if ( obj != undefined ) {
     APP.scene.remove(obj);
 	}
-
+n
 	// Remove from json variable
 	//var newData = APP.MarkerTable.filter(function(item, index){ if (item.id != id) return true;});
 	//APP.MarkerTable = newData
+}
+
+APP.paint = function(){
+    // paint faces in given color and calculate area (and volume in future release)
+    const paint = [
+	{visible: true, id: 1, vertices_ix: [(0,0,0)], area: 0, volume :"-", rgb: "#ff0000"},
+	{visible: true, id: 0, vertices_ix: [(0,0,1)], area: 0, volume :"-", rgb: "#000000"}
+    ]
+}
+
+APP.erase = function(){
+    // remove painted color from faces
 }
 
 function StlViewer() {
