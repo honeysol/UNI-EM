@@ -313,6 +313,24 @@ n
 	//APP.MarkerTable = newData
 }
 
+const dragging = false;
+
+function onDragStart(event){
+    dragging = true;
+    setPaintTimer(350);
+}
+
+function onDragEnd(event){
+    dragging = false;
+}
+
+function setPaintTimer(interval) {
+    setTimeOut(() => {
+	if (dragging) {
+	    console.log({x: window.event.pageX, y:window.event.pageY})
+	}
+    }, interval)
+}
 APP.paint = function(){
     // paint faces in given color and calculate area (and volume in future release)
     const paint = [
@@ -364,7 +382,7 @@ function StlViewer() {
 	APP.animate();
 
 	// Response to mouse click
-	APP.renderer.domElement.addEventListener( 'mousedown', clickPosition, false );
+        APP.renderer.domElement.addEventListener( 'mousedown', clickPosition, false );
 
 	// Marker Variables
 	APP.MarkerOffOn = 0;
