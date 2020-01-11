@@ -17,8 +17,8 @@ const PaintTable = new Tabulator('#PaintTable', {
 	{title: "R", field: "r", download: true, visible: true, minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
 	{title: "G", field: "g", download: true, visible: true, minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
 	{title: "B", field: "b", download: true, visible: true, minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
-	{title: "Area": field: "area", download: true, visible: true},
-	{title: "Volume": field: "volume", download: true, visible: true}
+	{title: "Area", field: "area", download: true, visible: true},
+	{title: "Volume", field: "volume", download: true, visible: true}
     ],	
     cellEdited: function(cell) {}
 })
