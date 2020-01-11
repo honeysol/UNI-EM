@@ -10,7 +10,7 @@ const PaintTable = new Tabulator('#PaintTable', {
     resizableRows: true,
     initialSort: [{column: "name", dir: "asc"}],
     columns: [
-	{title: "Disable", field: "disable", download: true, visible: true},
+	{title: "Disable", field: "disable", download: true, visible: true, align: "center", editor: "tickCross", editable: onDeleteCheck},
 	{title: "Visible", field: "visible", download: true, visible: true },
 	{title: "ID", field: "id", download: true, visible: true},
 	{title: "Name", field: "name", download: true, visible: true},
@@ -22,3 +22,21 @@ const PaintTable = new Tabulator('#PaintTable', {
     ],	
     cellEdited: function(cell) {}
 })
+
+const onDeleteCheck = (cell) => {
+    const data = cell.getRow().getData();
+    APP.removePaint(data.id);  // TODO
+    cell.getRow.delete();
+}
+
+$('save-paint-table-csv').on('click', event = {
+    downloadPaintTableAsCSV();
+});
+
+const downloadPaintTableAsCSV = () => {
+    // TODO
+    // id, name, color, x, y, z
+    // 0, spine, #00FF00, 0, 0, 0
+    // 0, spine, #00FF00, 0, 0, 0.1
+    // ...
+};
