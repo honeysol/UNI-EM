@@ -122,13 +122,26 @@
       </fieldset>
     </p>
     <p>
-      <fieldset class="table-frame paint^table-frame">
+      <fieldset class="table-frame paint-table-frame">
 	<legend>Paint Table</legend>
-	<div>OFF ON +</div>
+              <div class="menu-label"> </div>
+              OFF
+              <label class="switch">
+                <input type="checkbox" onclick="SwitchPaint(this.checked);">
+                <span class="slider round"></span>
+              </label>
+              ON
+	<div><button type="button" id="button-add-paint-layer" class="btn btn4 font3">+</button></div>
 	<div id="PaintTable"></div>
-	<div>Eraser</div>
+	<div>Eraser
+	  <label class="switch">
+	    <input type="checkbox" onclick="SwitchEraserPaint(this.checked);" checked>
+	    <span class="slider round"></span>
+	  </label>
+	  Paint
+	</div>
 	<div class="paint-table-actions">
-	  <button type="button" id="save-paint-table-csv" clss="btn btn4 font3>\">Download CSV</button>
+	  <button type="button" id="save-paint-table-csv" clss="btn btn4 font3">Download CSV</button>
 	</div>
       </fieldset>
     </p>
