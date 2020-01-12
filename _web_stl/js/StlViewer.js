@@ -307,8 +307,8 @@ APP.removeMarker = function(id){
 	if ( obj != undefined ) {
     APP.scene.remove(obj);
 	}
-n
-	// Remove from json variable
+
+        // Remove from json variable
 	//var newData = APP.MarkerTable.filter(function(item, index){ if (item.id != id) return true;});
 	//APP.MarkerTable = newData
 }
@@ -341,6 +341,10 @@ APP.paint = function(){
 
 APP.erase = function(){
     // remove painted color from faces
+}
+
+function switchPaint() {
+    // change APP mode between paint mode and default mode. Be careful for marker mode.
 }
 
 function StlViewer() {

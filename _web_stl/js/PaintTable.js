@@ -23,20 +23,24 @@ const PaintTable = new Tabulator('#PaintTable', {
     cellEdited: function(cell) {}
 })
 
-const onDeleteCheck = (cell) => {
-    const data = cell.getRow().getData();
-    APP.removePaint(data.id);  // TODO
-    cell.getRow.delete();
-}
+//const onDeleteCheck = (cell) => {
+//    const data = cell.getRow().getData();
+//    APP.removePaint(data.id);  // TODO
+//    cell.getRow.delete();
+//}
 
-$('save-paint-table-csv').on('click', event = {
-    downloadPaintTableAsCSV();
-});
+//$('#button-add-paint-layer').on('click', event = {
+//    PaintTable.addData([{disable: false, visible: true, name: "New layer", r: 0, g: 0, b: 0, area: 0, volume: "-"}], true)
+//})
 
-const downloadPaintTableAsCSV = () => {
+//$('save-paint-table-csv').on('click', event = {
+//    downloadPaintTableAsCSV();
+//});
+
+//const downloadPaintTableAsCSV = () => {
     // TODO
     // id, name, color, x, y, z
     // 0, spine, #00FF00, 0, 0, 0
     // 0, spine, #00FF00, 0, 0, 0.1
     // ...
-};
+//};
