@@ -1,40 +1,63 @@
 const PaintTable = new Tabulator('#PaintTable', {
-    ajaxURL: "./data/segmentInfo.json",
-    layout: "fitColumns",
-    autoResize: true,
-    responsiveLayout: "hide",
-    tooltips: true,
-    addRowPos: "top",
-    history: true,
-    pagination: "local",
-    resizableRows: true,
-    initialSort: [{column: "name", dir: "asc"}],
-    columns: [
-	{title: "Disable", field: "disable", download: true, visible: true, align: "center", editor: "tickCross", editable: onDeleteCheck},
-	{title: "Visible", field: "visible", download: true, visible: true },
-	{title: "ID", field: "id", download: true, visible: true},
-	{title: "Name", field: "name", download: true, visible: true},
-	{title: "R", field: "r", download: true, visible: true, minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
-	{title: "G", field: "g", download: true, visible: true, minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
-	{title: "B", field: "b", download: true, visible: true, minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
-	{title: "Area", field: "area", download: true, visible: true},
-	{title: "Volume", field: "volume", download: true, visible: true}
-    ],	
-    cellEdited: function(cell) {}
-})
+	layout:"fitColumns",      //fit columns to width of table
+	autoResize:true,
+	responsiveLayout:"hide",  //hide columns that dont fit on the table
+	tooltips:true,            //show tool tips on cells
+	addRowPos:"top",          //when adding a new row, add it to the top of the table
+	history:true,             //allow undo and redo actions on the table
+	pagination:"local",       //paginate the data
+	paginationSize:10,         //allow 7 rows per page of data
+	resizableRows:true,       //allow row order to be changed
+	initialSort:[             //set the initial sort order of the data
+		{column:"id", dir:"dsc"},
+	],
+	columns:[                 //define the table columns
+	    {title: "Delete", formatter: "buttonCross",  align: "center", cellClick: function(e, cell){cell.getRow().delete()}},
+	    {title: "ID", field:"id", width: 40},
+	    {title: "Name", field: "name"},
+   	    {title: "R", field: "r", minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
+	    {title: "G", field: "g", minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
+	    {title: "B", field: "b", minwidth: 30, width: 35, align: "right", visible: true, editorParams: {min:0, max: 255, step: 1}},
+	    {title: "Area", field: "area"},
+	    {title: "Volume", field: "volume"}
+	],
+});
 
-//const onDeleteCheck = (cell) => {
-//    const data = cell.getRow().getData();
+//const deletePaint = (cell) => {
+//  const data = cell.getRow().getData();
 //    APP.removePaint(data.id);  // TODO
 //    cell.getRow.delete();
 //}
 
-//$('#button-add-paint-layer').on('click', event = {
-//    PaintTable.addData([{disable: false, visible: true, name: "New layer", r: 0, g: 0, b: 0, area: 0, volume: "-"}], true)
-//})
+//const addPaintLayer = (event) => {
 
-//$('save-paint-table-csv').on('click', event = {
-//    downloadPaintTableAsCSV();
+//    console.log(event);
+//};
+let incre = 0;
+$('#button-add-paint-layer').on('click', function(event) {
+    var NewMarker = {
+      act: true,
+      id:incre++,
+      name: "Marker"+String(incre),
+      radius: 1,
+      r: 0,
+      g: 0,
+      b: 0,
+      x: incre,
+      y: 0,
+      z: 0
+    };
+    var marker = {id:incre, name:String(incre), r:0, g:0, b: 0, area:0, volume: 0};
+
+    ObjMarkerTable.addData(NewMarker);  // Change database MarkerTable (setData)
+    PaintTable.addData(marker);
+});
+
+
+//console.log('I am here');
+//$('save-paint-table-csv').on('click', (event) = {
+    //    downloadPaintTableAsCSV();
+//    console.log('aiueo save');
 //});
 
 //const downloadPaintTableAsCSV = () => {
@@ -43,4 +66,4 @@ const PaintTable = new Tabulator('#PaintTable', {
     // 0, spine, #00FF00, 0, 0, 0
     // 0, spine, #00FF00, 0, 0, 0.1
     // ...
-//};
+//}
