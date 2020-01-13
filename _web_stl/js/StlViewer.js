@@ -127,9 +127,11 @@ function rgb2hex ( rgb ) {
 
 // Operation on mouse click
 function clickPosition( event ) {
+	onDragStart(event);
 	// Location of mouse
 	var clientX = event.clientX;
 	var clientY = event.clientY;
+
 
 	// Normalization of location
 	var mouse = new THREE.Vector2();
@@ -143,7 +145,9 @@ function clickPosition( event ) {
 
 	// Indetify crossing objects.
 	var intersects = raycaster.intersectObjects( APP.scene.children );
-
+	for (const intersect of intersects) {
+		console.log(intersect.object.type);
+	}
 	// Write the most proximal one.
 	if (Object.keys(intersects).length > 0) {
 		var objid = intersects[0].object.name;
@@ -313,21 +317,28 @@ APP.removeMarker = function(id){
 	//APP.MarkerTable = newData
 }
 
-const dragging = false;
+var dragging = false;
 
-function onDragStart(event){
+var onDragStart = (event) => {
     dragging = true;
-    setPaintTimer(350);
+	setPaintTimer(350);
+	console.log('start');
 }
 
-function onDragEnd(event){
-    dragging = false;
+var onDragEnd = (event) => {
+	dragging = false;
+	console.log('end');
 }
 
 function setPaintTimer(interval) {
-    setTimeOut(() => {
+    setTimeout(() => {
 	if (dragging) {
-	    console.log({x: window.event.pageX, y:window.event.pageY})
+//		mouse.x = ( ( clientX - APP.renderer.domElement.offsetLeft ) / APP.renderer.domElement.clientWidth ) * 2 - 1;
+//		mouse.y = - ( ( clientY - APP.renderer.domElement.offsetTop ) / APP.renderer.domElement.clientHeight ) * 2 + 1;
+//		console.log(mouse.x, mouse.y);
+        console.log(dragging);
+	} else {
+		console.log(dragging);
 	}
     }, interval)
 }
@@ -386,8 +397,8 @@ function StlViewer() {
 	APP.animate();
 
 	// Response to mouse click
-        APP.renderer.domElement.addEventListener( 'mousedown', clickPosition, false );
-
+		APP.renderer.domElement.addEventListener( 'mousedown', clickPosition, false );
+		APP.renderer.domElement.addEventListener('mouseup', onDragEnd, false);
 	// Marker Variables
 	APP.MarkerOffOn = 0;
 	APP.MarkerR = 255;
