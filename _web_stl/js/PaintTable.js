@@ -8,7 +8,10 @@ const PaintTable = new Tabulator('#PaintTable', {
 	pagination:"local",
 	paginationSize:10,
 	resizableRows:true,
+	selectable: 1,
+	movableRows: true,
 	initialSort:[{column:"id", dir:"dsc"},],
+	rowSelected: (row) => {console.log(row);},
 	columns:[
 	    {title: "Delete", formatter: "buttonCross",  align: "center", cellClick: (e, cell) => {cell.getRow().delete()}},
 	    {title: "ID", field:"id", width: 40},
