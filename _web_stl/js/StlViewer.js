@@ -1,3 +1,4 @@
+import {annotateBySphere} from "./Painter";
 //
 //
 //
@@ -321,7 +322,7 @@ var dragging = false;
 
 var onDragStart = (event) => {
     dragging = true;
-	setPaintTimer(350);
+	paint(event);
 	console.log('start');
 }
 
@@ -330,17 +331,12 @@ var onDragEnd = (event) => {
 	console.log('end');
 }
 
-function setPaintTimer(interval) {
-    setTimeout(() => {
-	if (dragging) {
-//		mouse.x = ( ( clientX - APP.renderer.domElement.offsetLeft ) / APP.renderer.domElement.clientWidth ) * 2 - 1;
-//		mouse.y = - ( ( clientY - APP.renderer.domElement.offsetTop ) / APP.renderer.domElement.clientHeight ) * 2 + 1;
-//		console.log(mouse.x, mouse.y);
-        console.log(dragging);
-	} else {
-		console.log(dragging);
-	}
-    }, interval)
+var paint = (event) => {
+	if (!dragging) return;
+	var mouse = new THREE.Vector2();
+	mouse.x = ( ( clientX - APP.renderer.domElement.offsetLeft ) / APP.renderer.domElement.clientWidth ) * 2 - 1;
+	mouse.y = - ( ( clientY - APP.renderer.domElement.offsetTop ) / APP.renderer.domElement.clientHeight ) * 2 + 1;
+	
 }
 APP.paint = function(){
     // paint faces in given color and calculate area (and volume in future release)
@@ -399,6 +395,8 @@ function StlViewer() {
 	// Response to mouse click
 		APP.renderer.domElement.addEventListener( 'mousedown', clickPosition, false );
 		APP.renderer.domElement.addEventListener('mouseup', onDragEnd, false);
+		APP.renderer.domElement.addEventListener('onmousemove', paint, false);
+		APP.renderer.domElement.onmousemove = paint;
 	// Marker Variables
 	APP.MarkerOffOn = 0;
 	APP.MarkerR = 255;
