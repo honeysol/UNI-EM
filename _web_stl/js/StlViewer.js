@@ -1,4 +1,4 @@
-import {annotateBySphere} from "./Painter";
+import {annotateBySphere} from "./Painter.js"
 //
 //
 //
@@ -333,10 +333,16 @@ var onDragEnd = (event) => {
 
 var paint = (event) => {
 	if (!dragging) return;
-	var mouse = new THREE.Vector2();
-	mouse.x = ( ( clientX - APP.renderer.domElement.offsetLeft ) / APP.renderer.domElement.clientWidth ) * 2 - 1;
-	mouse.y = - ( ( clientY - APP.renderer.domElement.offsetTop ) / APP.renderer.domElement.clientHeight ) * 2 + 1;
-	
+	annotateBySphere({
+		x: event.offsetX,
+		y: event.offsetY,
+		camera: APP.camera,
+		scene: APP.scene,
+		container: APP.renderer.domElement,
+		radius: 0.03,
+		ignoreBackFace: null,
+		color: "#00FF00"
+	});
 }
 APP.paint = function(){
     // paint faces in given color and calculate area (and volume in future release)
