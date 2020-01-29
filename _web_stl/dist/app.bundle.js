@@ -36139,11 +36139,12 @@ const calcArea = (x1, y1, z1, x2, y2, z2, x3, y3, z3) => {
 /*!***********************************************!*\
   !*** ./node_modules/three-annotator/index.js ***!
   \***********************************************/
-/*! exports provided: annotateBySphere, getCurrentParams, setColorOptions */
+/*! exports provided: getIntersect, annotateBySphere, getCurrentParams, setColorOptions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getIntersect", function() { return getIntersect; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "annotateBySphere", function() { return annotateBySphere; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCurrentParams", function() { return getCurrentParams; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setColorOptions", function() { return setColorOptions; });
@@ -36163,36 +36164,58 @@ const getRay = ({
 
 const raycaster = new THREE.Raycaster();
 
-const getIntersect = ({
+const _getIntersect = ({
   raymouse,
   camera,
-  scene
+  meshes
 }) => {
   raycaster.setFromCamera(raymouse, camera);
-  const intersects = raycaster.intersectObjects(scene.children);
+  const intersects = raycaster.intersectObjects(meshes);
   const intersect = intersects.find(intersect => intersect.object.type === "Mesh");
   return intersect;
 };
 
+const getIntersect = ({
+  x,
+  y,
+  camera,
+  meshes,
+  container
+}) => {
+  const raymouse = new THREE.Vector2(x / container.clientWidth * 2 - 1, -(y / container.clientHeight) * 2 + 1);
+
+  const intersect = _getIntersect({
+    raymouse,
+    camera,
+    meshes
+  });
+
+  return {
+    intersect
+  };
+};
 const annotateBySphere = ({
   x,
   y,
   camera,
-  scene,
+  meshes,
   container,
   radius,
   ignoreBackFace,
   color
 }) => {
   const raymouse = new THREE.Vector2(x / container.clientWidth * 2 - 1, -(y / container.clientHeight) * 2 + 1);
-  const intersect = getIntersect({
+
+  const intersect = _getIntersect({
     raymouse,
     camera,
-    scene
+    meshes
   });
 
   if (!intersect) {
-    return;
+    return {
+      intersect
+    };
   }
 
   const mesh = intersect.object;
@@ -36207,24 +36230,23 @@ const annotateBySphere = ({
     camera
   });
   const geometryState = Object(_geometryState__WEBPACK_IMPORTED_MODULE_0__["getGeometryState"])(geometry);
-  return geometryState.annotate({
+  geometryState.annotate({
     center,
     direction,
     limit,
     color,
     ignoreBackFace
   });
+  return {
+    intersect
+  };
 };
 const getCurrentParams = ({
-  scene
+  meshes
 }) => {
   let area = 0;
   const areas = {};
-  scene.traverse(mesh => {
-    if (mesh.type !== "Mesh") {
-      return;
-    }
-
+  meshes.forEach(mesh => {
     const geometry = mesh.geometry;
 
     if (!geometry.isBufferGeometry) {
@@ -36244,13 +36266,9 @@ const getCurrentParams = ({
   };
 };
 const setColorOptions = (options, {
-  scene
+  meshes
 }) => {
-  scene.traverse(mesh => {
-    if (mesh.type !== "Mesh") {
-      return;
-    }
-
+  meshes.forEach(mesh => {
     const geometry = mesh.geometry;
 
     if (!geometry.isBufferGeometry) {

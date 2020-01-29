@@ -107,7 +107,7 @@ const updateColorOptionsOnAnnotator = () => {
   };
   console.log(colorOptions);
   setColorOptions(colorOptions, {
-    scene: _APP__WEBPACK_IMPORTED_MODULE_0__["APP"].scene
+    meshes: _APP__WEBPACK_IMPORTED_MODULE_0__["APP"].getMeshes()
   });
 };
 const AnnotationTable = new Tabulator('#AnnotationTable', {
@@ -1303,24 +1303,55 @@ var onDragEnd = event => {
 };
 
 var annotate = event => {
-  if (!_APP__WEBPACK_IMPORTED_MODULE_1__["APP"].dragging) return;
+  if (!_APP__WEBPACK_IMPORTED_MODULE_1__["APP"].dragging) {
+    const {
+      intersect
+    } = getIntersect({
+      x: event.offsetX,
+      y: event.offsetY,
+      camera: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].camera,
+      meshes: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].getMeshes(),
+      container: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].renderer.domElement
+    });
+    updateCursor(intersect && intersect.point);
+    return;
+  }
+
+  ;
   if (!_APP__WEBPACK_IMPORTED_MODULE_1__["APP"].annotation_mode) return;
-  annotateBySphere({
+  const {
+    intersect
+  } = annotateBySphere({
     x: event.offsetX,
     y: event.offsetY,
     camera: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].camera,
-    scene: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].scene,
+    meshes: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].getMeshes(),
     container: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].renderer.domElement,
     radius: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].AnnotatorRadius || 3,
     ignoreBackFace: null
   });
-  updateMetricsOnAnnotationTable(_AnnotationTable__WEBPACK_IMPORTED_MODULE_0__["AnnotationTable"], {
-    scene: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].scene
-  });
+  updateCursor(intersect && intersect.point);
+  updateMetricsOnAnnotationTable(_AnnotationTable__WEBPACK_IMPORTED_MODULE_0__["AnnotationTable"]);
 };
 
-const updateMetricsOnAnnotationTable = (annotationTable, scene) => {
-  const params = getCurrentParams(scene);
+const updateCursor = position => {
+  const radius = _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].AnnotatorRadius || 3;
+  const cursor = _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].cursor;
+
+  if (position) {
+    cursor.position.copy(position);
+    const zoom = radius / cursor.geometry.boundingSphere.radius;
+    cursor.scale.set(zoom, zoom, zoom);
+    cursor.visible = true;
+  } else {
+    cursor.visible = false;
+  }
+};
+
+const updateMetricsOnAnnotationTable = annotationTable => {
+  const params = getCurrentParams({
+    meshes: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].getMeshes()
+  });
   const areas = params.areas;
   const newRows = annotationTable.getData("active").map(_item => {
     const item = Object.assign({}, _item);
@@ -1328,6 +1359,10 @@ const updateMetricsOnAnnotationTable = (annotationTable, scene) => {
     return item;
   });
   annotationTable.updateData(newRows);
+};
+
+_APP__WEBPACK_IMPORTED_MODULE_1__["APP"].getMeshes = () => {
+  return _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].scene.children.filter(object => object.type === "Mesh" && object.geometry.isBufferGeometry && !object.isCursor);
 };
 
 function StlViewer() {
@@ -1375,7 +1410,19 @@ function StlViewer() {
   _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].MarkerPrefix = "Marker";
   _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].MarkerSuffix = 0;
   _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].MarkerRadius = 2.0;
-  _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].MarkerID = 1; // Boundingbox variables
+  _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].MarkerID = 1; // Cursor 
+
+  var geometry = new THREE.SphereBufferGeometry(3, 32, 32);
+  var material = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    opacity: 0.3,
+    transparent: true,
+    depthWrite: false
+  });
+  var cursor = new THREE.Mesh(geometry, material);
+  cursor.isCursor = true;
+  _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].cursor = cursor;
+  _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].scene.add(cursor); // Boundingbox variables
 
   var prot = location.protocol;
   var url = prot + "/data/Boundingbox.json"; // jQuery getJSONを使用
