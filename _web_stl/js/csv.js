@@ -44,7 +44,7 @@ export const csvFormatter = function(columns, data, options, setFileContents, co
   //generate header row
   fileContents = [titles.join(delimiter)];
 
-  function parseRows(data) {
+  function parseRows({ data }) {
     //generate each row of the table
     data.forEach(function (row) {
       var rowData = [];
