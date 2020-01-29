@@ -221,6 +221,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _prepareThreeAnnotator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./prepareThreeAnnotator */ "./app/prepareThreeAnnotator.js");
 /* harmony import */ var _css_construction_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../css/construction.css */ "./css/construction.css");
 /* harmony import */ var _css_construction_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_css_construction_css__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _fortawesome_fontawesome_free_css_all_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fortawesome/fontawesome-free/css/all.css */ "./node_modules/@fortawesome/fontawesome-free/css/all.css");
+/* harmony import */ var _fortawesome_fontawesome_free_css_all_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_fontawesome_free_css_all_css__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -333,6 +336,17 @@ Object.assign(self, three_annotator__WEBPACK_IMPORTED_MODULE_0__);
 /*!******************************!*\
   !*** ./css/construction.css ***!
   \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./node_modules/@fortawesome/fontawesome-free/css/all.css":
+/*!****************************************************************!*\
+  !*** ./node_modules/@fortawesome/fontawesome-free/css/all.css ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

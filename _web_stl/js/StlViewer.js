@@ -347,7 +347,7 @@ var annotate = (event) => {
 		camera: APP.camera,
 		scene: APP.scene,
 		container: APP.renderer.domElement,
-		radius: 3.,
+		radius: APP.AnnotatorRadius || 3,
 		ignoreBackFace: null,
   });
   updateMetricsOnAnnotationTable(AnnotationTable, {scene: APP.scene})

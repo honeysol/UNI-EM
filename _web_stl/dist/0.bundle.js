@@ -1311,7 +1311,7 @@ var annotate = event => {
     camera: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].camera,
     scene: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].scene,
     container: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].renderer.domElement,
-    radius: 3.,
+    radius: _APP__WEBPACK_IMPORTED_MODULE_1__["APP"].AnnotatorRadius || 3,
     ignoreBackFace: null
   });
   updateMetricsOnAnnotationTable(_AnnotationTable__WEBPACK_IMPORTED_MODULE_0__["AnnotationTable"], {
