@@ -62,7 +62,7 @@ export const updateColorOptionsOnAnnotator = () => {
     overwrite: APP.annotation_overwrite
   }
   console.log(colorOptions);
-  setColorOptions(colorOptions, {scene: APP.scene});
+  setColorOptions(colorOptions, {meshes: APP.getMeshes()});
 };
 
 export const AnnotationTable = new Tabulator('#AnnotationTable', {

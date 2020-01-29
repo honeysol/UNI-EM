@@ -339,22 +339,45 @@ var onDragEnd = (event) => {
 }
 
 var annotate = (event) => {
-  if (!APP.dragging) return;
-  if (!APP.annotation_mode) return;
-	annotateBySphere({
+  if (!APP.dragging) {
+	const { intersect } = getIntersect({
 		x: event.offsetX,
 		y: event.offsetY,
 		camera: APP.camera,
-		scene: APP.scene,
+		meshes: APP.getMeshes(),
+		container: APP.renderer.domElement,
+	})
+	updateCursor(intersect && intersect.point);
+	return;
+  };
+  if (!APP.annotation_mode) return;
+  const { intersect } = annotateBySphere({
+		x: event.offsetX,
+		y: event.offsetY,
+		camera: APP.camera,
+		meshes: APP.getMeshes(),
 		container: APP.renderer.domElement,
 		radius: APP.AnnotatorRadius || 3,
 		ignoreBackFace: null,
   });
-  updateMetricsOnAnnotationTable(AnnotationTable, {scene: APP.scene})
+  updateCursor(intersect && intersect.point);
+  updateMetricsOnAnnotationTable(AnnotationTable)
 };
+const updateCursor = position => {
+	const radius = APP.AnnotatorRadius || 3;
+	const cursor = APP.cursor;
+	if (position) {
+		cursor.position.copy(position);
+		const zoom = radius / cursor.geometry.boundingSphere.radius;
+		cursor.scale.set(zoom, zoom, zoom);
+		cursor.visible = true;
+	  } else {
+		cursor.visible = false;
+	  }
+}
 
-const updateMetricsOnAnnotationTable = (annotationTable, scene) => {
-	const params = getCurrentParams(scene);
+const updateMetricsOnAnnotationTable = (annotationTable) => {
+	const params = getCurrentParams({ meshes: APP.getMeshes() });
 	const areas = params.areas;
 	const newRows = annotationTable.getData("active").map(_item => {
 		const item = Object.assign({}, _item);
@@ -363,6 +386,10 @@ const updateMetricsOnAnnotationTable = (annotationTable, scene) => {
 	})
 	annotationTable.updateData(newRows);
 };
+
+APP.getMeshes = () => {
+	return APP.scene.children.filter(object => object.type === "Mesh" && object.geometry.isBufferGeometry && !object.isCursor);
+}
 
 
 export function StlViewer() {
@@ -417,6 +444,14 @@ export function StlViewer() {
 	APP.MarkerSuffix = 0;
 	APP.MarkerRadius = 2.0;
 	APP.MarkerID     = 1;
+
+	// Cursor 
+	var geometry = new THREE.SphereBufferGeometry( 3, 32, 32 );
+	var material = new THREE.MeshLambertMaterial( {color: 0xffffff, opacity: 0.3, transparent: true, depthWrite: false} );
+	var cursor = new THREE.Mesh( geometry, material );
+	cursor.isCursor = true;
+	APP.cursor = cursor;
+	APP.scene.add( cursor );
 
 	// Boundingbox variables
 	var prot = location.protocol;
