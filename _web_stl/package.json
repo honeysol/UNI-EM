@@ -28,6 +28,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
     "agh.sprintf": "0.0.11",
+    "bootstrap": "^4.4.1",
+    "bootstrap-slider": "^10.6.2",
     "jquery": "^3.4.1",
     "tabulator-tables": "^4.5.3",
     "three": "^0.112.1",

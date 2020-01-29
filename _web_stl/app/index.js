@@ -5,12 +5,18 @@ import "./prepareThree";
 import "three/examples/js/controls/TrackballControls.js";
 import "three/examples/js/loaders/STLLoader.js";
 import "./prepareThreeAnnotator";
+import slider from "bootstrap-slider";
 
 import "../css/construction.css"
 import "@fortawesome/fontawesome-free/css/all.css";
+import "bootstrap-slider/dist/css/bootstrap-slider.css";
+import "bootstrap/dist/css/bootstrap.css";
 
-$(() => {
-    import("../js/init")
+console.log(slider);
+
+
+$(async () => {
+    await import("../js/init")
     // Prohibit file drag & drop.
     window.addEventListener('dragover', function(ev){
         ev.preventDefault();
@@ -33,5 +39,7 @@ $(() => {
         setMode(mode);
     })
     setMode("view")
+
+    $("input.slider").slider();
 });
 
