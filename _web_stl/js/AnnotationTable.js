@@ -144,7 +144,7 @@ $('#save-annotation-table-csv').on('click', (event) => {
 const downloadAnnotationTableAsCSV = () => {
   const tableData = AnnotationTable.getData("active");
   const csvData = [["id", "name", "r", "g", "b", "area"]]
-  for (row of tableData) {
+  for (const row of tableData) {
     csvData.push([row.id, row.name, row.r, row.g, row.b]);
   }
 

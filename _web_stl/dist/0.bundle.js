@@ -273,7 +273,7 @@ const downloadAnnotationTableAsCSV = () => {
   const tableData = AnnotationTable.getData("active");
   const csvData = [["id", "name", "r", "g", "b", "area"]];
 
-  for (row of tableData) {
+  for (const row of tableData) {
     csvData.push([row.id, row.name, row.r, row.g, row.b]);
   }
 
@@ -1445,7 +1445,9 @@ const csvFormatter = function (columns, data, options, setFileContents, config) 
 
   fileContents = [titles.join(delimiter)];
 
-  function parseRows(data) {
+  function parseRows({
+    data
+  }) {
     //generate each row of the table
     data.forEach(function (row) {
       var rowData = [];
