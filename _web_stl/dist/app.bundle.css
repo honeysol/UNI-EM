@@ -1015,28 +1015,37 @@ input:checked + .slider:before {
 }
 
 .toggleButton {
-  -webkit-appearance: initial;
   height: 24px;
   width: 24px;
   background: #fff;
 }
 
-.toggleButton:active {
-  border-style: none;
-  border-style: none;
+button:active {
   background: #eee;
   border-top: 2px solid #000;
   border-left: 2px solid #000;
 }
-.toggleButton.active {
-  border-style: none;
-  border-style: none;
+button.active {
   background: #eee;
   border-top: 2px solid #000;
   border-left: 2px solid #000;
 }
-.toggleButton:focus {
+button {
+  -webkit-appearance: initial;
+}
+button:focus {
   outline: none;
+}
+
+.buttonGroup button{
+  height: 24px;
+  font-size: 11px;
+}
+
+.buttonGroup {
+  font-size: 0;
+  margin-top: 3px;
+  margin-bottom: 5px;
 }
 /*!
  * Font Awesome Free 5.12.0 by @fontawesome - https://fontawesome.com
