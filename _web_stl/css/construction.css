@@ -201,3 +201,28 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.toggleButton {
+  -webkit-appearance: initial;
+  height: 24px;
+  width: 24px;
+  background: #fff;
+}
+
+.toggleButton:active {
+  border-style: none;
+  border-style: none;
+  background: #eee;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+}
+.toggleButton.active {
+  border-style: none;
+  border-style: none;
+  background: #eee;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+}
+.toggleButton:focus {
+  outline: none;
+}

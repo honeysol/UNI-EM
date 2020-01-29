@@ -49,6 +49,36 @@
             <input type="number" min="0" max="100" step="5" value="50" onchange="AmbLight(this.value);">
           </li>
         </ul>
+        <div class="archive">Annotation</div>
+        <ul class="subMenu appearance-actions">
+          <li>
+            <div class="menu-label"> </div>
+            OFF
+            <label class="switch">
+              <input type="checkbox" onclick="switchAnnotation(this.checked)">
+              <span class="slider round"></span>
+            </label>
+            ON
+          </li>
+          <li>
+            <div class="menu-label">Tools:</div>
+            <button class="toggleButton" onclick="switchEraserAnnotation(!this.classList.toggle('active'))" ><i class="fas fa-eraser"></i></button>
+          </li>
+          <li>
+            <div class="menu-label">Radius:</div>
+            <input type="number" min="1" max="100" step="1" value="3" onchange="APP.AnnotatorRadius = Number(this.value);">
+          </li>
+          <li>
+            <div class="menu-label">Overwrite:</div>
+            OFF
+            <label class="switch">
+              <input type="checkbox" onclick="setAnnotationOverwrite(this.checked)">
+              <span class="slider round"></span>
+            </label>
+            ON
+          </li>
+        </ul>
+
         <div class="archive">Marker label</div>
         <ul class="subMenu marker-label-actions">
           <li>
@@ -96,33 +126,10 @@
     </p>
     <p>
       <fieldset class="table-frame annotation-table-frame">
-	      <legend>Annotation Table</legend>
-              <div class="menu-label"> </div>
-              OFF
-              <label class="switch">
-                <input type="checkbox" onclick="switchAnnotation(this.checked)">
-                <span class="slider round"></span>
-              </label>
-              ON
         <div><button type="button" id="button-add-annotation-layer" class="btn btn4 font3">+</button></div>
         <div id="AnnotationTable"></div>
-        <div>Eraser
-          <label class="switch">
-            <input type="checkbox" onclick="switchEraserAnnotation(this.checked)" checked>
-            <span class="slider round"></span>
-          </label>
-          Annotator
-        </div>
-        <div>Overwrite OFF
-          <label class="switch">
-            <input type="checkbox" onclick="setAnnotationOverwrite(this.checked)">
-            <span class="slider round"></span>
-          </label>
-          ON
-        </div>
-
         <div class="annotation-table-actions">
-          <button type="button" id="save-annotation-table-csv" clss="btn btn4 font3">Download CSV</button>
+          <button type="button" id="save-annotation-table-csv" class="btn btn4 font3">Download CSV</button>
         </div>
       </fieldset>
     </p>

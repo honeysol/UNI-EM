@@ -7,6 +7,7 @@ import "three/examples/js/loaders/STLLoader.js";
 import "./prepareThreeAnnotator";
 
 import "../css/construction.css"
+import "@fortawesome/fontawesome-free/css/all.css";
 
 $(() => {
     import("../js/init")

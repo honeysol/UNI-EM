@@ -19,12 +19,14 @@
     "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
+    "file-loader": "^5.0.2",
     "mini-css-extract-plugin": "^0.9.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.0",
     "agh.sprintf": "0.0.11",
     "jquery": "^3.4.1",
     "tabulator-tables": "^4.5.3",
