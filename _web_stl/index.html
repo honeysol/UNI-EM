@@ -49,40 +49,38 @@
             <input type="number" min="0" max="100" step="5" value="50" onchange="AmbLight(this.value);">
           </li>
         </ul>
-        <li>
-          <div class="archive">Marker label</div>
-          <ul class="subMenu marker-label-actions">
-            <li>
-              <div class="menu-label"> </div>
-              OFF
-              <label class="switch">
-                <input type="checkbox" onclick="MarkerOffOn(this.checked);">
-                <span class="slider round"></span>
-              </label>
-              ON
-            </li>
-            <li>
-              <div class="menu-label">Radius:</div>
-              <input type="number" min="0.2" max="20" step="0.2" value="2.0" onchange="APP.MarkerRadius = Number(this.value);">
-            </li>
-            <li>
-              <div class="menu-label">Color:</div>
-              R: <input type="number" min="0" max="255" step="1" value="255" onchange="APP.MarkerR = Number(this.value);">
-              G: <input type="number" min="0" max="255" step="1" value="0"   onchange="APP.MarkerG = Number(this.value);">
-              B: <input type="number" min="0" max="255" step="1" value="0"   onchange="APP.MarkerB = Number(this.value);">
-            </li>
-            <li>
-              <div class="menu-label">Prefix:</div>
-              <input type="text" value="Marker" onchange="APP.MarkerPrefix = this.value;">
-            </li>
-            <li>
-              <div class="menu-label">Suffix:</div>
-              <input type="number" id="SetSuffixNum" min="0" step="1" value="0" onchange="APP.MarkerSuffix = Number(this.value);">
-            </li>
-          </ul>
+        <div class="archive">Marker label</div>
+        <ul class="subMenu marker-label-actions">
           <li>
-            <button type="button" class="save-image btn btn4 font3" onClick="SaveImage(this.checked);">Save Image</button>
+            <div class="menu-label"> </div>
+            OFF
+            <label class="switch">
+              <input type="checkbox" onclick="MarkerOffOn(this.checked);">
+              <span class="slider round"></span>
+            </label>
+            ON
           </li>
+          <li>
+            <div class="menu-label">Radius:</div>
+            <input type="number" min="0.2" max="20" step="0.2" value="2.0" onchange="APP.MarkerRadius = Number(this.value);">
+          </li>
+          <li>
+            <div class="menu-label">Color:</div>
+            R: <input type="number" min="0" max="255" step="1" value="255" onchange="APP.MarkerR = Number(this.value);">
+            G: <input type="number" min="0" max="255" step="1" value="0"   onchange="APP.MarkerG = Number(this.value);">
+            B: <input type="number" min="0" max="255" step="1" value="0"   onchange="APP.MarkerB = Number(this.value);">
+          </li>
+          <li>
+            <div class="menu-label">Prefix:</div>
+            <input type="text" value="Marker" onchange="APP.MarkerPrefix = this.value;">
+          </li>
+          <li>
+            <div class="menu-label">Suffix:</div>
+            <input type="number" id="SetSuffixNum" min="0" step="1" value="0" onchange="APP.MarkerSuffix = Number(this.value);">
+          </li>
+        </ul>
+        <li>
+          <button type="button" class="save-image btn btn4 font3" onClick="SaveImage(this.checked);">Save Image</button>
         </li>
       </li>
     </ul>
