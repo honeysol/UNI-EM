@@ -1,25 +1,4 @@
 import { APP } from "./APP";
-'use strict';
-const roomId = '/room01'
-const socket = io(`${location.origin}/?room_id=${roomId}`);
-console.log(socket);
-
-socket.on('connect', () => {
-  console.log('connect', socket.id);
-});
-
-socket.on('current', room => {
-  console.log('current', room);
-});
-
-
-
-//socket.on('disconnect', () => {
-//  console.log('disconnect');
-//});
-
-
-
 
 const mutatorClip = (value, data, type, mutatorParams, component) => {
   const min = mutatorParams.min;
@@ -84,14 +63,6 @@ export const updateColorOptionsOnAnnotator = () => {
   }
   console.log(colorOptions);
   setColorOptions(colorOptions, {scene: APP.scene});
-  socket.on('update', room => {
-    console.log('update', room);
-    socket.emit('update', {
-      data: 'this is updated room!',
-      other: 'data',
-      timestamp: new Date().toISOString(),
-    });
-  });
 };
 
 export const AnnotationTable = new Tabulator('#AnnotationTable', {
@@ -128,9 +99,9 @@ export const AnnotationTable = new Tabulator('#AnnotationTable', {
       }},
 	    {title: "ID", field:"id", width: 40},
 	    {title: "Name", field: "name"},
-   	  {title: "R", field: "r", minWidth: 30, width: 35, align: "right", visible: true, editor: "number", editorParams: {min:0, max: 255, step: 1}, mutator: mutatorClip, mutatorParams: mutatorParamsClip, headerSort:false},
-	    {title: "G", field: "g", minWidth: 30, width: 35, align: "right", visible: true, editor: "number", editorParams: {min:0, max: 255, step: 1}, mutator: mutatorClip, mutatorParams: mutatorParamsClip, headerSort:false},
-	    {title: "B", field: "b", minWidth: 30, width: 35, align: "right", visible: true, editor: "number", editorParams: {min:0, max: 255, step: 1}, mutator: mutatorClip, mutatorParams: mutatorParamsClip, headerSort:false},
+   	  {title: "R", field: "r", minwidth: 30, width: 35, align: "right", visible: true, editor: "number", editorParams: {min:0, max: 255, step: 1}, mutator: mutatorClip, mutatorParams: mutatorParamsClip, headerSort:false},
+	    {title: "G", field: "g", minwidth: 30, width: 35, align: "right", visible: true, editor: "number", editorParams: {min:0, max: 255, step: 1}, mutator: mutatorClip, mutatorParams: mutatorParamsClip, headerSort:false},
+	    {title: "B", field: "b", minwidth: 30, width: 35, align: "right", visible: true, editor: "number", editorParams: {min:0, max: 255, step: 1}, mutator: mutatorClip, mutatorParams: mutatorParamsClip, headerSort:false},
 	    {title: "Area", field: "area"},
 	    {title: "Volume", field: "volume"}
 	],  
