@@ -135,10 +135,9 @@ class AnnotatorServerLogic:
     annotator = tornado.web.Application([
       (r'/data/(.*)', tornado.web.StaticFileHandler, {'path': stldata_dir}),
       (r'/ws/display', AnnotatorWebSocket, {'player': self.small_ids}),
-      (r'/(.*)', tornado.web.StaticFileHandler, {'path': path_main}),
       (r'/socket.io/', socketio.get_tornado_handler(sio)),
-    ],debug=True,autoreload=True)
-    #annotator.listen(3001)
+      (r'/(.*)', tornado.web.StaticFileHandler, {'path': path_main})
+-
     server = tornado.httpserver.HTTPServer(annotator)
     server.listen(self.u_info.port_stl)
     print('stldata_dir: ',stldata_dir)
@@ -149,9 +148,9 @@ class AnnotatorServerLogic:
     print('*'*80)
 
     tornado.ioloop.IOLoop.instance().start()
-    ev_loop.stop()
-    ev_loop.close()
-    server.stop()
+    #ev_loop.stop()
+    #ev_loop.close()
+    #server.stop()
     print("Tornado web server stops.")
     return
 

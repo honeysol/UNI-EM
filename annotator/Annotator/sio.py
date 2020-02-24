@@ -9,7 +9,6 @@ sio = socketio.AsyncServer(async_mode='tornado')
 
 @sio.event
 async def update(sid, data):
-  print(sid, data)
   session = await sio.get_session(sid)
   room_id = session['room_id']
 
@@ -23,11 +22,8 @@ async def disconnect_request(sid):
 
 @sio.event
 async def connect(sid, environ):
-  print(sid)  
   room_id = parse_qs(environ.get('QUERY_STRING'))['room_id'][0] # ToDo: エラー処理
-  print(room_id)
   
-  print(socketio.rooms)
   await sio.save_session(sid, { 'room_id': room_id })
   sio.enter_room(sid, room_id)
 

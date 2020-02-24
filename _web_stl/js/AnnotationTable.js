@@ -1,9 +1,8 @@
 import { APP } from "./APP";
-
+'use strict';
 const roomId = '/room01'
 const socket = io(`${location.origin}/?room_id=${roomId}`);
 console.log(socket);
-
 
 socket.on('connect', () => {
   console.log('connect', socket.id);
@@ -13,19 +12,13 @@ socket.on('current', room => {
   console.log('current', room);
 });
 
-socket.on('update', room => {
-  console.log('update', room);
-});
 
-socket.emit('update', {
-  data: 'this is updated room!',
-  other: 'data',
-  timestamp: new Date().toISOString(),
-});
 
-socket.on('disconnect', () => {
-  console.log('disconnect');
-});
+//socket.on('disconnect', () => {
+//  console.log('disconnect');
+//});
+
+
 
 
 const mutatorClip = (value, data, type, mutatorParams, component) => {
@@ -91,6 +84,14 @@ export const updateColorOptionsOnAnnotator = () => {
   }
   console.log(colorOptions);
   setColorOptions(colorOptions, {scene: APP.scene});
+  socket.on('update', room => {
+    console.log('update', room);
+    socket.emit('update', {
+      data: 'this is updated room!',
+      other: 'data',
+      timestamp: new Date().toISOString(),
+    });
+  });
 };
 
 export const AnnotationTable = new Tabulator('#AnnotationTable', {
