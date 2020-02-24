@@ -136,8 +136,8 @@ class AnnotatorServerLogic:
       (r'/data/(.*)', tornado.web.StaticFileHandler, {'path': stldata_dir}),
       (r'/ws/display', AnnotatorWebSocket, {'player': self.small_ids}),
       (r'/socket.io/', socketio.get_tornado_handler(sio)),
-      (r'/(.*)', tornado.web.StaticFileHandler, {'path': path_main})
--
+      (r'/(.*)', tornado.web.StaticFileHandler, {'path': path_main}) # This wildcard path should be the last of list
+    ])
     server = tornado.httpserver.HTTPServer(annotator)
     server.listen(self.u_info.port_stl)
     print('stldata_dir: ',stldata_dir)
