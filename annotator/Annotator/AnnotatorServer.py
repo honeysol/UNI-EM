@@ -15,6 +15,7 @@ import lxml
 import lxml.etree
 from itertools import chain, product
 from skimage import measure
+import socketio
 
 
 from marching_cubes import march
@@ -28,6 +29,7 @@ sys.path.append(path.join(main_dir, "plugins"))
 
 from Params import Params
 from DB import DB
+from annotator.Annotator.sio import sio
 import miscellaneous.Miscellaneous as m
 
 
@@ -130,13 +132,12 @@ class AnnotatorServerLogic:
     ev_loop = asyncio.new_event_loop()
     asyncio.set_event_loop(ev_loop)
 
-
     annotator = tornado.web.Application([
       (r'/data/(.*)', tornado.web.StaticFileHandler, {'path': stldata_dir}),
       (r'/ws/display', AnnotatorWebSocket, {'player': self.small_ids}),
-      (r'/(.*)', tornado.web.StaticFileHandler, {'path': path_main})
-    ],debug=True,autoreload=True)
-
+      (r'/socket.io/', socketio.get_tornado_handler(sio)),
+      (r'/(.*)', tornado.web.StaticFileHandler, {'path': path_main}) # This wildcard path should be the last of list
+    ])
     server = tornado.httpserver.HTTPServer(annotator)
     server.listen(self.u_info.port_stl)
     print('stldata_dir: ',stldata_dir)
@@ -147,9 +148,9 @@ class AnnotatorServerLogic:
     print('*'*80)
 
     tornado.ioloop.IOLoop.instance().start()
-    ev_loop.stop()
-    ev_loop.close()
-    server.stop()
+    #ev_loop.stop()
+    #ev_loop.close()
+    #server.stop()
     print("Tornado web server stops.")
     return
 
